@@ -19,10 +19,7 @@ const getAdminMetaData = name => {
         exportTypes: settings.exportTypes,
         textLimitter: (str, limit) => {
             if (str.length > limit) {
-                return str
-                    .slice(0, limit)
-                    .trim()
-                    .concat("...");
+                return str.slice(0, limit).trim().concat("...");
             }
             return str;
         },
@@ -115,9 +112,7 @@ const getTodayDateEndTime = () => {
 };
 
 const getMonthStartDate = () => {
-    return `${moment()
-        .startOf("month")
-        .format("YYYY-MM-DD")}T00:00:00Z`;
+    return `${moment().startOf("month").format("YYYY-MM-DD")}T00:00:00Z`;
 };
 
 const getMonthEndDate = () => {
@@ -243,7 +238,7 @@ class Mail {
         });
     }
 
-    signupSuccessful({ name, email }) {
+    signupSuccessful({ name, email, id }) {
         const mailOptions = {
             from: process.env.MAIL_ID,
             to: email,
@@ -251,14 +246,14 @@ class Mail {
             html: `<div style="
 				background: #eee;
 				padding: 2rem;
-			"><h1>This is an automated email</h1><p>Now you can buy any products on our site!</p><a target="_blank" href="#"><button style="
+			"><h1>This is an automated email</h1><p>Now you can buy any products on our site!</p><a target="_blank" href="${process.env.URL}/users/confirm/${id}"><button style="
 				padding: 1rem;
 				background: #ff6a6a;
 				color: #fff;
 				font-size: 1.2rem;
 				border: none;
 				border-radius: 5px;
-				">Continue shopping</button></a>
+				">Confirm Email</button></a>
 			</div>`,
         };
         return new Promise((resolve, reject) => {
