@@ -56,6 +56,7 @@ app.use("/product/:id/", express.static("static"));
 app.use("/category", express.static("static"));
 app.use("/account", express.static("static"));
 app.use("/users", express.static("static"));
+app.use("/users/confirm/:id", express.static("static"));
 app.use("/admin", express.static("static"));
 app.use("/admin/data", express.static("static/admin/"));
 app.use("/admin/product/:id", express.static("static/admin/"));

@@ -282,6 +282,12 @@ router.get("/checkout", ensureAuthenticated, (req, res) => {
     const userCart = req.user.cart;
     const priceDetails = getPriceDetails(userCart);
 
+    if (req.user.confirm === false) {
+        return res.render("notconfirmed", {
+            ...getCommonMetaData(req, "Unconfirmed Account!"),
+        });
+    }
+
     res.render("account/checkout", {
         ...getCommonMetaData(req, "Checkout"),
         priceDetails,
@@ -306,6 +312,7 @@ router.post("/checkout", ensureAuthenticated, async (req, res) => {
         }
         user = item;
     });
+
     const userCart = user.cart;
 
     for (const cartItem of userCart) {
