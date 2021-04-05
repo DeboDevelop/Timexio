@@ -68,6 +68,37 @@
                                 </tr>
                             </tfoot>
                             <tbody>
+                                <script>
+                                    function deleteRow() {
+                                        $(".deleteBtn").click(function (e) {
+                                            var id = $(this).attr("data-id");
+
+                                            swal({
+                                                title: "Are you sure?",
+                                                text: "Once deleted, you will not be able to recover this data!",
+                                                icon: "warning",
+                                                buttons: true,
+                                                dangerMode: true,
+                                            })
+                                                .then(willDelete => {
+                                                    if (willDelete) {
+                                                        $.ajax({
+                                                            type: "DELETE",
+                                                            url: `/admin/product/${id}/delete`,
+                                                            success: function (data) {
+                                                                location.reload();
+                                                            },
+                                                            error: function (error) {
+                                                                swal(error);
+                                                            },
+                                                        });
+                                                    }
+                                                })
+                                                .catch(err => console.log(err));
+                                        });
+                                    }
+                                </script>
+
                                 <% data.forEach((item, num)=> { %>
                                 <tr
                                     class="<%= item.quantity < adminQuantityWarningCount ? 'bg-light-danger' : 'text-dark' %>"
@@ -84,37 +115,7 @@
                                         >
                                             <i class="fas fa-external-link-alt"></i>
                                         </a>
-                                        <script>
-                                            function deleteRow() {
-                                                $(".deleteBtn").click(function (e) {
-                                                    var id = $(this).attr("data-id");
 
-                                                    swal({
-                                                        title: "Are you sure?",
-                                                        text:
-                                                            "Once deleted, you will not be able to recover this data!",
-                                                        icon: "warning",
-                                                        buttons: true,
-                                                        dangerMode: true,
-                                                    })
-                                                        .then(willDelete => {
-                                                            if (willDelete) {
-                                                                $.ajax({
-                                                                    type: "DELETE",
-                                                                    url: `/admin/product/${id}/delete`,
-                                                                    success: function (data) {
-                                                                        location.reload();
-                                                                    },
-                                                                    error: function (error) {
-                                                                        swal(error);
-                                                                    },
-                                                                });
-                                                            }
-                                                        })
-                                                        .catch(err => console.log(err));
-                                                });
-                                            }
-                                        </script>
                                         <button
                                             onclick="deleteRow()"
                                             class="deleteBtn btn btn-outline-danger rounded-pill border-0 m-1"
