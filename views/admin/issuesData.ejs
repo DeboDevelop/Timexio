@@ -1,123 +1,159 @@
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
-	<!-- Main Content -->
-	<div id="content">
-		<%- include ('../partials/admin/navbar.ejs') %>
+    <!-- Main Content -->
+    <div id="content">
+        <%- include ('../partials/admin/navbar.ejs') %>
 
-		<!-- Begin Page Content -->
-		<div class="container-fluid">
-			<!-- Page Heading -->
-			<div
-				class="d-sm-flex align-items-center justify-content-between mb-4"
-			>
-				<h1 class="h3 mb-0 text-gray-800">
-					Customer Issues
-				</h1>
-				<div class="text-right">
-					<a
-						target="_blank"
-						href="/admin/export/<%= exportTypes.customerIssues %>"
-						class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm"
-						><i class="fas fa-download fa-sm text-white-50"></i>
-						Generate Report</a
-					>
-				</div>
-			</div>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Customer Issues</h1>
+                <div class="text-right">
+                    <a
+                        target="_blank"
+                        href="/admin/export/<%= exportTypes.customerIssues %>"
+                        class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm"
+                        ><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a
+                    >
+                </div>
+            </div>
 
-			<div class="mb-3">
-				<h5>Legend</h5>
-				<div class="d-flex">
-					<div class="mr-2">
-						<div class="border border-dark bg-light-danger" style="width: 20px; height: 20px;"></div>
-					</div>
-					<div class="">Open Issues</div>
-				</div>
-				<div class="d-flex">
-					<div class="mr-2">
-						<div class="border border-dark" style="width: 20px; height: 20px;"></div>
-					</div>
-					<div class="">Closed Issues</div>
-				</div>
-			</div>
+            <div class="mb-3">
+                <h5>Legend</h5>
+                <div class="d-flex">
+                    <div class="mr-2">
+                        <div class="border border-dark bg-light-danger" style="width: 20px; height: 20px"></div>
+                    </div>
+                    <div class="">Open Issues</div>
+                </div>
+                <div class="d-flex">
+                    <div class="mr-2">
+                        <div class="border border-dark" style="width: 20px; height: 20px"></div>
+                    </div>
+                    <div class="">Closed Issues</div>
+                </div>
+            </div>
 
-		<%- include ('../partials/messages.ejs') %>
-			<!-- DataTales Example -->
-			<div class="card shadow mb-4">
-				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold text-primary">
-						List of all customer issues
-					</h6>
-				</div>
-				<div class="card-body">
-					<div class="table-responsive">
-						<table
-							class="table table-bordered"
-							id="dataTable"
-							width="100%"
-							cellspacing="0"
-						>
-							<thead>
-								<tr>
-									<th scope="col">#</th>
-									<th class="text-center">Options</th>
-									<% humanizedFields.forEach(fieldName => { %>
-										<th class="text-dark text-center"><%= fieldName %></th>
-									<% }) %>
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th scope="col">#</th>
-									<th>Options</th>
-									<% humanizedFields.forEach(fieldName => { %>
-										<th class="text-dark"><%= fieldName %></th>
-									<% }) %>
-								</tr>
-							</tfoot>
-							<tbody>
-								<% data.forEach((item, num) => { %>
-								<tr class="<%= !item.closedDate ? 'bg-light-danger' : 'text-dark' %>">
-									<td><%= num+1 %></td>
-									<td class="text-center">
-										<a target="_blank" class="btn btn-outline-primary rounded-pill border-0" href="customer-issues/<%= item.id %>/details"  data-toggle="tooltip" data-placement="left" title="Detailed view">
-											<i class="fas fa-external-link-alt"></i>
-										</a>
-										<button class="deleteBtn btn btn-outline-danger rounded-pill border-0 m-1" data-issue_id="<%= item.id %>" data-toggle="tooltip" data-placement="left" title="Delete"><i class="fas fa-trash"></i></button>
-									</td>
-									<% fields.forEach(fieldName => { %>
-										<td>
-											<% if(item[fieldName] === null) { %>
-												<div class="text-center">
-													<i class="fas fa-exclamation-circle text-danger"  data-toggle="tooltip" data-placement="right" title="Not yet resolved!"></i>
-												</div>
-											<% } else { %>
-												<%= textLimitter(item[fieldName], 30) %>
-											<% } %>
-										</td>
-										<% }) %>
-									</tr>
-								<% }) %>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- /.container-fluid -->
+            <%- include ('../partials/messages.ejs') %>
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">List of all customer issues</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th class="text-center">Options</th>
+                                    <% humanizedFields.forEach(fieldName => { %>
+                                    <th class="text-dark text-center"><%= fieldName %></th>
+                                    <% }) %>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th>Options</th>
+                                    <% humanizedFields.forEach(fieldName => { %>
+                                    <th class="text-dark"><%= fieldName %></th>
+                                    <% }) %>
+                                </tr>
+                            </tfoot>
 
+                            <script>
+                                function deleteRow() {
+                                    $(".deleteBtn").click(function (e) {
+                                        var id = $(this).attr("data-issue_id");
+                                        console.log(id);
+                                        swal({
+                                            title: "Are you sure?",
+                                            text: "Once deleted, you will not be able to recover this data!",
+                                            icon: "warning",
+                                            buttons: true,
+                                            dangerMode: true,
+                                        })
+                                            .then(willDelete => {
+                                                if (willDelete) {
+                                                    $.ajax({
+                                                        type: "DELETE",
+                                                        url: `/admin/customer-issues/${id}/delete`,
+                                                        success: function (data) {
+                                                            location.reload();
+                                                        },
+                                                        error: function (error) {
+                                                            swal(error);
+                                                        },
+                                                    });
+                                                }
+                                            })
+                                            .catch(err => console.log(err));
+                                    });
+                                }
+                            </script>
+                            <tbody>
+                                <% data.forEach((item, num) => { %>
+                                <tr class="<%= !item.closedDate ? 'bg-light-danger' : 'text-dark' %>">
+                                    <td><%= num+1 %></td>
+                                    <td class="text-center">
+                                        <a
+                                            target="_blank"
+                                            class="btn btn-outline-primary rounded-pill border-0"
+                                            href="customer-issues/<%= item.id %>/details"
+                                            data-toggle="tooltip"
+                                            data-placement="left"
+                                            title="Detailed view"
+                                        >
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                        <button
+                                            onclick="deleteRow()"
+                                            class="deleteBtn btn btn-outline-danger rounded-pill border-0 m-1"
+                                            data-issue_id="<%= item.id %>"
+                                            data-toggle="tooltip"
+                                            data-placement="left"
+                                            title="Delete"
+                                        >
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                    <% fields.forEach(fieldName => { %>
+                                    <td>
+                                        <% if(item[fieldName] === null) { %>
+                                        <div class="text-center">
+                                            <i
+                                                class="fas fa-exclamation-circle text-danger"
+                                                data-toggle="tooltip"
+                                                data-placement="right"
+                                                title="Not yet resolved!"
+                                            ></i>
+                                        </div>
+                                        <% } else { %> <%= textLimitter(item[fieldName], 30) %> <% } %>
+                                    </td>
+                                    <% }) %>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- End of Main Content -->
 
-	</div>
-	<!-- End of Main Content -->
-
-	<!-- Footer -->
-	<footer class="sticky-footer bg-white">
-		<div class="container my-auto">
-			<div class="copyright text-center my-auto">
-				<span>Copyright &copy; Timexio 2020</span>
-			</div>
-		</div>
-	</footer>
-	<!-- End of Footer -->
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Timexio 2020</span>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
 </div>
 <!-- End of Content Wrapper -->
 
@@ -128,33 +164,33 @@
 <!-- Page level custom scripts -->
 <script src="js/demo/datatables-demo.js"></script>
 <script src="js/tooltip.js"></script>
-<script>
-	$(document).ready(function () { 
-		$('.deleteBtn').click(function(e) {
-			var id = $(this).attr('data-issue_id')
-			console.log(id)
-			swal({
-				title: "Are you sure?",
-				text: "Once deleted, you will not be able to recover this data!",
-				icon: "warning",
-				buttons: true,
-				dangerMode: true
-			})
-			.then((willDelete) => {
-				if (willDelete) {
-					$.ajax({
-						type: 'DELETE',
-						url: `/admin/customer-issues/${id}/delete`,
-						success: function (data) { 
-							location.reload();
-						},
-						error: function (error) { 
-							swal(error);
-						}
-					})
-				}
-			})
-			.catch(err => console.log(err))
-		})
-	})
-</script>
+<!-- <script>
+    $(document).ready(function () {
+        $(".deleteBtn").click(function (e) {
+            var id = $(this).attr("data-issue_id");
+            console.log(id);
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this data!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then(willDelete => {
+                    if (willDelete) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: `/admin/customer-issues/${id}/delete`,
+                            success: function (data) {
+                                location.reload();
+                            },
+                            error: function (error) {
+                                swal(error);
+                            },
+                        });
+                    }
+                })
+                .catch(err => console.log(err));
+        });
+    });
+</script> -->
