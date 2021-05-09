@@ -6,7 +6,7 @@ const User = require("../models/User");
 const { forwardAuthenticated } = require("../config/auth");
 const { getCommonMetaData } = require("./utils");
 const settings = require("../settings");
-const { Mail } = require("./utils");
+const { Mail, ForgetPassword } = require("./utils");
 
 const router = express.Router();
 
@@ -125,6 +125,87 @@ router.post("/login", (req, res, next) => {
         failureRedirect: "/users/login",
         failureFlash: true,
     })(req, res, next);
+});
+
+// Forget Password Page
+router.get("/forget", forwardAuthenticated, (req, res) => {
+    res.render("forget", {
+        ...getCommonMetaData(req, "Forget Password"),
+    });
+});
+
+// Forget Password handle
+router.post("/forget", async (req, res) => {
+    const { email } = req.body;
+    const user = await User.findOne({ email: email });
+    if (user == null) {
+        req.flash("error_msg", "Email not Found");
+        res.redirect("/users/signup");
+    } else {
+        const newMail = new ForgetPassword();
+        console.log("User: ", user);
+        const id = user._id;
+        console.log("id", id);
+        req.flash("success_msg", "We have send mail to reset password.");
+        newMail
+            .signupSuccessful({ email, id })
+            .then(response => {
+                console.log(response);
+                console.log("Mail sent!");
+            })
+            .catch(err => {
+                console.log(err);
+                console.log("Mail failed to send");
+            });
+        // redirect to login page
+        res.redirect("/users/login");
+    }
+});
+
+// Reset Password Page
+router.get("/reset/:id", forwardAuthenticated, (req, res) => {
+    res.render("reset", {
+        ...getCommonMetaData(req, "Reset Your Password"),
+    });
+});
+
+// Reset Password handle
+router.post("/reset", async (req, res) => {
+    const { url, password, password2 } = req.body;
+    let parts = url.split("/");
+    const id = parts.pop() || parts.pop();
+    // console.log("Id : ", id);
+    // console.log("Password1 : ", password);
+    // console.log("Password2 : ", password2);
+    if (password === password2) {
+        try {
+            const user = await User.findById(id);
+            bcryptjs.genSalt(10, (genSaltError, salt) => {
+                if (genSaltError) {
+                    console.log(genSaltError);
+                    throw genSaltError;
+                }
+                bcryptjs.hash(password, salt, async (hashError, hash) => {
+                    if (hashError) {
+                        console.log(hashError);
+                        throw hashError;
+                    }
+                    //reset password
+                    user.password = hash;
+                    await user.save();
+                    req.flash("success_msg", "Your Password has been reset.");
+                    res.redirect(`/users/login`);
+                });
+            });
+        } catch (err) {
+            console.log(err);
+            req.flash("error_msg", "Some error occured please try again.");
+            res.redirect("/users/login");
+        }
+    } else {
+        req.flash("error_msg", "password didn't match");
+        res.redirect(`/reset/${id}`);
+    }
 });
 
 // logout handle

@@ -246,7 +246,7 @@ class Mail {
             html: `<div style="
 				background: #eee;
 				padding: 2rem;
-			"><h1>This is an automated email</h1><p>Now you can buy any products on our site!</p><a target="_blank" href="${process.env.URL}/users/confirm/${id}"><button style="
+			    "><h1>This is an automated email</h1><p>Now you can buy any products on our site!</p><a target="_blank" href="${process.env.URL}/users/confirm/${id}"><button style="
 				padding: 1rem;
 				background: #ff6a6a;
 				color: #fff;
@@ -254,6 +254,47 @@ class Mail {
 				border: none;
 				border-radius: 5px;
 				">Confirm Email</button></a>
+			</div>`,
+        };
+        return new Promise((resolve, reject) => {
+            this.transporter.sendMail(mailOptions, (err, info) => {
+                if (err) {
+                    return reject(err);
+                } else {
+                    return resolve(info);
+                }
+            });
+        });
+    }
+}
+
+class ForgetPassword {
+    constructor() {
+        this.transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.MAIL_ID,
+                pass: process.env.MAIL_PASSWORD,
+            },
+        });
+    }
+
+    signupSuccessful({ email, id }) {
+        const mailOptions = {
+            from: process.env.MAIL_ID,
+            to: email,
+            subject: `Reset password`,
+            html: `<div style="
+				background: #eee;
+				padding: 2rem;
+			    "><h1>This is an automated email</h1><p>Now you can reset your password on our site!</p><a target="_blank" href="${process.env.URL}/users/reset/${id}"><button style="
+				padding: 1rem;
+				background: #ff6a6a;
+				color: #fff;
+				font-size: 1.2rem;
+				border: none;
+				border-radius: 5px;
+				">Reset Password</button></a>
 			</div>`,
         };
         return new Promise((resolve, reject) => {
@@ -305,5 +346,6 @@ module.exports = {
     getEarningsOverview,
     humanizeFieldNames,
     Mail,
+    ForgetPassword,
     getMonthlyIssues,
 };

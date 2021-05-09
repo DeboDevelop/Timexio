@@ -1,0 +1,64 @@
+<%- include('partials/navbar.ejs') %>
+<main>
+    <!--================login_part Area (Reset Password) =================-->
+    <section class="login_part section_padding">
+        <script>
+            $("#form").submit(function (eventObj) {
+                $("<input />")
+                    .attr("type", "hidden")
+                    .attr("name", "url")
+                    .attr("value", window.location.pathname)
+                    .appendTo("#form");
+                return true;
+            });
+        </script>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-sm-12 col-lg-6 col-md-6 mx-auto">
+                    <div class="login_part_form">
+                        <div class="login_part_form_iner">
+                            <%- include ('./partials/messages') %>
+
+                            <h3>Reset Your Password</h3>
+                            <form
+                                id="form"
+                                class="row contact_form"
+                                action="/users/reset"
+                                method="post"
+                                novalidate="novalidate"
+                            >
+                                <div class="col-md-12 form-group p_star">
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        class="form-control"
+                                        placeholder="Create Password"
+                                        value="<%= typeof password != 'undefined' ? password : '' %>"
+                                    />
+                                </div>
+                                <div class="col-md-12 form-group p_star">
+                                    <input
+                                        type="password"
+                                        id="password2"
+                                        name="password2"
+                                        class="form-control"
+                                        placeholder="Confirm Password"
+                                        value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
+                                    />
+                                </div>
+                                <div class="col-md-12 form-group mt-4">
+                                    <button type="submit" value="submit" class="btn_3">
+                                        Reset Password <i data-feather="send"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================login_part end =================-->
+</main>
+<%- include('./partials/footer.ejs') %> <%- include('./partials/search-box.ejs')%>
