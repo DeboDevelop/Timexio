@@ -7,8 +7,54 @@
         <title>Confirmation Page</title>
     </head>
     <body>
-        <h1>Your Account has been confirmed!</h1>
-        <h3>Go to home page</h3>
-        <a href="/">Home</a>
+        <style>
+            body, html
+            {
+                background: #ECEDEF;
+                background-image: url("https://wallpapercave.com/wp/wp7566265.jpg");
+                background-repeat: no-repeat;
+                background-size: cover;
+                margin: 0;
+                padding: 0;
+            }
+            .container {
+                position: fixed;
+                top: 50%;
+                left: 75%;
+                transform: translate(-50%, -50%);
+                background: #fff;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.2);
+                border-radius: 14px;
+                padding-bottom: 20px;
+                width: 550px;               
+            }
+
+        </style>
+        <div class="container">
+            <div style="transform: translate(10%, 0%);">
+            <br><br>
+            <h2>Your Account has been confirmed!</h2>
+            <h3>You are good to go !</h3>
+            <div style="transform: translate(20%, 0%);">
+            <br><br>
+            <a href="/" style="
+                text-decoration:none;
+                height: 60px;
+                    padding: 1rem;
+                    margin: 5px;
+                    box-sizing: border-box;
+                    background: #ff6a6a;
+                    border: none;
+                    font-size: 1.2rem;
+                    line-height: 30px;
+                    border-radius: 5px;
+                    font-weight: 700;
+                    color: #fff;"
+                    onmouseover="this.style.backgroundColor='#f44336';" 
+                    onmouseout="this.style.backgroundColor='#ff6a6a';">Start shopping ➜</a>
+            </div>
+            <br><br>
+            </div>
+        </div>
     </body>
 </html>

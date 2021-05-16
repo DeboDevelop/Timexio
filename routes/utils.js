@@ -243,18 +243,48 @@ class Mail {
             from: process.env.MAIL_ID,
             to: email,
             subject: `Welcome to Timexio, ${name}`,
-            html: `<div style="
-				background: #eee;
-				padding: 2rem;
-			    "><h1>This is an automated email</h1><p>Now you can buy any products on our site!</p><a target="_blank" href="${process.env.URL}/users/confirm/${id}"><button style="
-				padding: 1rem;
-				background: #ff6a6a;
-				color: #fff;
-				font-size: 1.2rem;
-				border: none;
-				border-radius: 5px;
-				">Confirm Email</button></a>
-			</div>`,
+            html: ` 
+            <table width="100%" border="1 px" cellspacing="0" cellpadding="0">
+            <tr bgcolor="red">
+            <td align="center">
+            <h1 style="color: white">Timexio</h1>
+            </td>
+            </tr>
+            <tr>
+            <td align="center" bgcolor="#ECEDEF" background="https://i.imgur.com/4HBwIRv.jpg" width="640" height="400" valign="top" style="background: url('https://i.imgur.com/4HBwIRv.jpg') center / cover no-repeat #000000;">
+            <br>
+            <div style="background: #ECEDEF;
+            margin: 0;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 14px;
+            padding-bottom: 20px;
+            width: 400px;">
+            <h1 style="color: #009933;">Account Confirmation</h1>
+            <br>
+            <p style="text-align: left;">Dear User,</p>
+            <p style="text-align: left;">To confirm your Timexio account, click on the button below. </p>
+            <br>
+            <hr class="rounded">
+            <br>
+            <a target="_blank" href="${process.env.URL}/users/confirm/${id}"
+                style="
+                text-decoration:none;height: 60px;
+                padding: 1rem;
+                margin: 5px;
+                box-sizing: border-box;
+                background: #009933;
+                border: none;
+                font-size: 1.2rem;
+                line-height: 30px;
+                border-radius: 5px;
+                font-weight: 700;
+                color: #fff;">Confirm Email
+            </a>
+        </div>
+        </td>
+        </tr>
+        </table>`,
         };
         return new Promise((resolve, reject) => {
             this.transporter.sendMail(mailOptions, (err, info) => {
@@ -284,18 +314,118 @@ class ForgetPassword {
             from: process.env.MAIL_ID,
             to: email,
             subject: `Reset password`,
-            html: `<div style="
-				background: #eee;
-				padding: 2rem;
-			    "><h1>This is an automated email</h1><p>Now you can reset your password on our site!</p><a target="_blank" href="${process.env.URL}/users/reset/${id}"><button style="
-				padding: 1rem;
-				background: #ff6a6a;
-				color: #fff;
-				font-size: 1.2rem;
-				border: none;
-				border-radius: 5px;
-				">Reset Password</button></a>
-			</div>`,
+            html: ` 
+            <table width="100%" border="1px solid black" cellspacing="0" cellpadding="0" >
+            <tr bgcolor="red">
+            <td align="center">
+            <h1 style="color: white">Timexio</h1>
+            </td>
+            </tr>
+            <tr>
+            <td align="center" bgcolor="#ECEDEF" background="https://i.imgur.com/4HBwIRv.jpg" width="640" height="400" valign="top" style="background: url('https://i.imgur.com/4HBwIRv.jpg') center / cover no-repeat #000000;">
+            <br>
+            <div style="background: #ECEDEF;
+                    margin: 0;
+                    padding: 2rem;
+                    background: #fff;
+                    border-radius: 14px;
+                    padding-bottom: 20px;
+                    width: 400px;">
+                <h1 style="color: #ff6a6a;">Reset Password</h1>
+                <br>
+                <p style="text-align: left;">Dear User,</p>
+                <p style="text-align: left;">You requested a password reset to restore access to your account. To continue, please click the button below: </p>
+                <br><br>
+                <hr class="rounded">
+                <br>
+                <a target="_blank" href="${process.env.URL}/users/reset/${id}"
+                style="
+                text-decoration:none;
+                height: 60px;
+                    padding: 1rem;
+                    margin: 5px;
+                    box-sizing: border-box;
+                    background: #ff6a6a;
+                    border: none;
+                    font-size: 1.2rem;
+                    line-height: 30px;
+                    border-radius: 5px;
+                    font-weight: 700;
+                    color: #fff;">RESET PASSWORD
+                </a>
+            </div>
+            </td>
+            </tr>
+            </table>`,
+        };
+        return new Promise((resolve, reject) => {
+            this.transporter.sendMail(mailOptions, (err, info) => {
+                if (err) {
+                    return reject(err);
+                } else {
+                    return resolve(info);
+                }
+            });
+        });
+    }
+}
+
+class PriceDropMail {
+    constructor() {
+        this.transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.MAIL_ID,
+                pass: process.env.MAIL_PASSWORD,
+            },
+        });
+    }
+
+    signupSuccessful(product) {
+        const maillist = product.maillist;
+        maillist.forEach(user => {
+            if (product.price <= user.price) {
+                const mailOptions = {
+                    from: process.env.MAIL_ID,
+                    to: user.email,
+                    subject: "Price Drop",
+                    html: `
+                    <h1>Price drop of the project you wanted - ${product.name} - ${user.price}</h1>
+                    `,
+                };
+                this.transporter.sendMail(mailOptions, (err, info) => {
+                    if (err) {
+                        console.log("Mail Failed to Sent!!");
+                        console.log(err);
+                    } else {
+                        console.log("Mail Sent Successfully!!");
+                        console.log(info);
+                    }
+                });
+            }
+        });
+    }
+}
+
+class OrderDeliver {
+    constructor() {
+        this.transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.MAIL_ID,
+                pass: process.env.MAIL_PASSWORD,
+            },
+        });
+    }
+
+    signupSuccessful({ user, product, order }) {
+        const mailOptions = {
+            from: process.env.MAIL_ID,
+            to: user.email,
+            subject: `Order Invoice`,
+            html: ` 
+            <h1>Your Order has been delivered. </h1>
+            `,
         };
         return new Promise((resolve, reject) => {
             this.transporter.sendMail(mailOptions, (err, info) => {
@@ -347,5 +477,7 @@ module.exports = {
     humanizeFieldNames,
     Mail,
     ForgetPassword,
+    PriceDropMail,
+    OrderDeliver,
     getMonthlyIssues,
 };

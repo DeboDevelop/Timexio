@@ -444,4 +444,35 @@ router.post("/issues/update", ensureAuthenticated, async (req, res) => {
     }
 });
 
+router.post("/wish/:id/add", ensureAuthenticated, async (req, res) => {
+    try {
+        const { check, price } = req.body;
+        const productId = req.params.id;
+        if (check == "on" || check == true) {
+            if (price == "" || price == undefined || price == null) {
+                throw "Price is undefined";
+            }
+            const user = await User.findById(req.user.id);
+            const product = await Product.findById(productId);
+            user.wishlist.push(productId);
+            await user.save();
+            product.maillist.push({
+                email: user.email,
+                price: parseInt(price),
+            });
+            await product.save();
+        } else {
+            const user = await User.findById(req.user.id);
+            user.wishlist.push(productId);
+            await user.save();
+        }
+        return res.redirect(`/product/${productId}/details`);
+    } catch (err) {
+        console.log(err);
+        return res.render("500", {
+            ...getCommonMetaData(req, "Something went wrong!"),
+        });
+    }
+});
+
 module.exports = router;

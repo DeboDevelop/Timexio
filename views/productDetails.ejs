@@ -5,21 +5,26 @@
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                 <div class="image-previews">
                     <p class="lead"><small>Click on any image to zoom</small></p>
-                    <% product.images.forEach(image => { %>
-                        <% if (image.length > 0) { %>
-                            <img src=<%= image %> alt="preview image" class="border p-2 product-preview-image" style="height: 50px; width: 50px;">
-                        <% } %>
-                    <% }) %>
+                    <% product.images.forEach(image => { %> <% if (image.length > 0) { %>
+                    <img
+                        src="<%= image %>"
+                        alt="preview image"
+                        class="border p-2 product-preview-image"
+                        style="height: 50px; width: 50px"
+                    />
+                    <% } %> <% }) %>
                 </div>
-                <img src="<%= product.images[0] %>" class="w-100 mt-4" id="productPrimaryImage" alt="primary image">
+                <img src="<%= product.images[0] %>" class="w-100 mt-4" id="productPrimaryImage" alt="primary image" />
             </div>
             <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 p-5">
-                <%- include('partials/messages.ejs')  %> 
-                <% if (product.featured) { %>
-                    <p class="my-4 p-2 d-inline-block bg-orange <%= product.featured ? 'featured-product-label' : '' %>"><span class="svg-fill-white mr-1" data-feather="star"></span><%= product.featured ? 'Featured' : '' %></p>
+                <%- include('partials/messages.ejs') %> <% if (product.featured) { %>
+                <p class="my-4 p-2 d-inline-block bg-orange <%= product.featured ? 'featured-product-label' : '' %>">
+                    <span class="svg-fill-white mr-1" data-feather="star"></span><%= product.featured ? 'Featured' : ''
+                    %>
+                </p>
                 <% } %>
                 <h3><%= product.name %></h3>
-                <hr>
+                <hr />
                 <table class="table table-borderless">
                     <tr>
                         <td><p class="lead">M.R.P:</p></td>
@@ -31,41 +36,106 @@
                         <td><h4 class="">Price:</h4></td>
                         <td>
                             <!-- display product price with tax -->
-                            <h4 class="text-danger">&#8377;<%= (product.price + ((product.tax/100)*product.price)).toLocaleString() %></h4>
+                            <h4 class="text-danger">
+                                &#8377;<%= (product.price + ((product.tax/100)*product.price)).toLocaleString() %>
+                            </h4>
 
                             <!-- check if free delivery is available or not -->
                             <% if (product.price + ((product.tax/100)*product.price) > minAmtReqForFreeDelivery) { %>
-                                <small><strong class="text-success">FREE DELIVERY!</strong></small>
+                            <small><strong class="text-success">FREE DELIVERY!</strong></small>
                             <% } else { %>
-                                <small>Shipping charges &#8377; <%= shippingPrice %></small>
+                            <small>Shipping charges &#8377; <%= shippingPrice %></small>
                             <% } %>
                         </td>
                     </tr>
                     <tr>
                         <td><p class="lead">You save:</p></td>
                         <td>
-                            <p class="text-danger">&#8377;<%= (product.increasedMRP - (product.price + ((product.tax/100)*product.price))).toFixed(2)  %> <small class="text-dark">Inclusive of all taxes (<%= product.tax %>%)</small></p>
+                            <p class="text-danger">
+                                &#8377;<%= (product.increasedMRP - (product.price +
+                                ((product.tax/100)*product.price))).toFixed(2) %>
+                                <small class="text-dark">Inclusive of all taxes (<%= product.tax %>%)</small>
+                            </p>
                         </td>
                     </tr>
                 </table>
                 <% if (product.quantity > 0) { %>
-                    <div class="buy-cart-btns mb-5 d-flex justify-content-center justify-content-md-start flex-wrap">
-                        <!-- <button class="btn-buy text-capitalize m-1">Quick Buy <i data-feather="zap"></i></button> -->
-                        <form action="/account/cart/<%= product.id %>/add" method="POST">
-                            <button type="submit" class="btn-addToCart text-capitalize m-1">
-                                Add to Cart <i data-feather="shopping-cart"></i>
-                            </button>
-                        </form>
+                <div class="buy-cart-btns mb-5 d-flex justify-content-center justify-content-md-start flex-wrap">
+                    <!-- <button class="btn-buy text-capitalize m-1">Quick Buy <i data-feather="zap"></i></button> -->
+                    <form action="/account/cart/<%= product.id %>/add" method="POST">
+                        <button type="submit" class="btn-addToCart text-capitalize m-1">
+                            Add to Cart <i data-feather="shopping-cart"></i>
+                        </button>
+                    </form>
+
+                    <!-- Button trigger modal -->
+                    <button
+                        type="button"
+                        class="btn-addToCart text-capitalize m-1"
+                        data-toggle="modal"
+                        data-target="#addtowishlist"
+                    >
+                        Add to Wishllist
+                    </button>
+
+                    <!-- Modal -->
+                    <div
+                        class="modal fade"
+                        id="addtowishlist"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="addtowishlist"
+                        aria-hidden="true"
+                    >
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addtowishlist">Add to Wishlist</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/account/wish/<%= product.id %>/add" method="POST">
+                                        <div class="form-group">
+                                            <label>I want a Discount</label>
+                                            <input type="checkbox" id="check" name="check" />
+                                            <br />
+                                            <label>Price</label>
+                                            <input type="text" id="price" name="price" />
+                                            <br />
+                                            <button type="submit" class="btn btn-primary">Add to wish list</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
                 <% } else { %>
-                    <p>All products have been <strong>sold out!</strong></p>
+                <p>All products have been <strong>sold out!</strong></p>
                 <% } %>
-                <hr>
-                <h4>Availability: 
-                    <% if (product.quantity > 1) { %>
-                        <span data-feather="check-circle" class="text-success" data-toggle="tooltip" data-placement="right" title="Product is available!"></span>
+                <hr />
+                <h4>
+                    Availability: <% if (product.quantity > 1) { %>
+                    <span
+                        data-feather="check-circle"
+                        class="text-success"
+                        data-toggle="tooltip"
+                        data-placement="right"
+                        title="Product is available!"
+                    ></span>
                     <% } else { %>
-                        <span data-feather="x-circle" class="text-danger" data-toggle="tooltip" data-placement="right" title="Coming Soon!"></span>
+                    <span
+                        data-feather="x-circle"
+                        class="text-danger"
+                        data-toggle="tooltip"
+                        data-placement="right"
+                        title="Coming Soon!"
+                    ></span>
                     <% } %>
                 </h4>
                 <div class="specs mt-5">
@@ -78,12 +148,10 @@
 </main>
 
 <script>
-    $('.product-preview-image').hover(function (e) { 
+    $(".product-preview-image").hover(function (e) {
         var image = e.currentTarget.src;
-        $('#productPrimaryImage').attr('src', image);
-    })
+        $("#productPrimaryImage").attr("src", image);
+    });
 </script>
 
-
-<%- include('./partials/footer.ejs') %> 
-<%- include('./partials/search-box.ejs') %>
+<%- include('./partials/footer.ejs') %> <%- include('./partials/search-box.ejs') %>
