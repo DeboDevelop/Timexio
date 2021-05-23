@@ -138,6 +138,35 @@
                     ></span>
                     <% } %>
                 </h4>
+                <script>
+                    function isNumberKey(evt) {
+                        var charCode = evt.which ? evt.which : evt.keyCode;
+                        if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
+                        return true;
+                    }
+                    function check_pin(pincode) {
+                        let available = parseInt(pincode) >= 700001 && parseInt(pincode) <= 700157;
+                        document.getElementById("result").innerHTML =
+                            available == true ? "Delivery Available" : "Delivery not available";
+                    }
+                    function reset_result() {
+                        document.getElementById("result").innerHTML = "";
+                    }
+                </script>
+                <form name="pincode">
+                    <label for="pincode"><i class="fas fa-thumbtack"></i> Check Availability at</label><br />
+                    <input
+                        name="pincode"
+                        type="text"
+                        id="pincode"
+                        onkeypress="return isNumberKey(event)"
+                        placeholder="Enter your Pincode"
+                    />
+                    <input type="button" value="Check" onClick="check_pin(pincode.value)" />
+                    <input type="reset" onclick="reset_result()" />
+                    <br />
+                    <p id="result"></p>
+                </form>
                 <div class="specs mt-5">
                     <h4>Specifications</h4>
                     <p><%- product.specs %></p>

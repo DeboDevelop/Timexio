@@ -1,70 +1,75 @@
 <header>
-	<!-- Header Start -->
-	<div class="header-area">
-		<div class="main-header header-sticky">
-			<div class="container">
-				<div class="menu-wrapper">
-					<!-- Logo -->
-					<div class="logo">
-						<a href="/"><img src="img/logo/logo.png" alt=""/></a>
-					</div>
-					<!-- Main-menu -->
-					<div class="main-menu d-none d-lg-block">
-						<nav>
-							<ul id="navigation">
-								<li><a href="/">Home</a></li>
-								<li><a href="/trending">Trending</a></li>
-								<li>
-									<a href="#">Categories</a>
-									<ul class="submenu">
-										<% categories.forEach(category => { %>
-											<li>
-												<a href="/category/<%= category %>"><%= category %></a>
-											</li>
-										<% }) %>
-									</ul>
-								</li>
-								<% if (locals.isAuthenticated) { %>
-									<li>
-										<a href="/account"><span data-feather="user"></span></a>
-									</li>
-									<li>
-										<a href="/account/cart"><span data-feather="shopping-cart"></span><% if (locals.totalCartItems) { %>
-											<span class="ml-1 badge badge-danger"><%= locals.totalCartItems %></span>
-										<% } %></a>
-									</li>
-								<% if (locals.admin) { %>
-									<li>
-										<a href="/admin"><span data-feather="settings"></span></a>
-									</li>
-								<% } %> <% } else { %>
-									<li>
-										<a class="text-primary" href="/users/login">Login</a>
-									</li>
-									<li>
-										<a class="text-danger" href="/users/signup">Sign Up</a>
-									</li>
-								<% } %>
-							</ul>
-						</nav>
-					</div>
-					<!-- Header Right -->
-					<div class="header-right">
-						<ul>
-							<li>
-								<div class="nav-search search-switch">
-									<span class="flaticon-search"></span>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<!-- Mobile Menu -->
-				<div class="col-12">
-					<div class="mobile_menu d-block d-lg-none"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Header End -->
+    <!-- Header Start -->
+    <div class="header-area">
+        <div class="main-header header-sticky">
+            <div class="container">
+                <div class="menu-wrapper">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <a href="/"><img src="img/logo/logo.png" alt="" /></a>
+                    </div>
+                    <!-- Main-menu -->
+                    <div class="main-menu d-none d-lg-block">
+                        <nav>
+                            <ul id="navigation">
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/trending">Trending</a></li>
+                                <li>
+                                    <a href="#">Categories</a>
+                                    <ul class="submenu">
+                                        <% categories.forEach(category => { %>
+                                        <li>
+                                            <a href="/category/<%= category %>"><%= category %></a>
+                                        </li>
+                                        <% }) %>
+                                    </ul>
+                                </li>
+                                <% if (locals.isAuthenticated) { %>
+                                <li>
+                                    <a href="/account"><span data-feather="user"></span></a>
+                                </li>
+                                <li>
+                                    <a href="/account/cart"
+                                        ><span data-feather="shopping-cart"></span><% if (locals.totalCartItems) { %>
+                                        <span class="ml-1 badge badge-danger"><%= locals.totalCartItems %></span>
+                                        <% } %></a
+                                    >
+                                </li>
+                                <li>
+                                    <a href="/account/wishlist"><span data-feather="heart"></span> </a>
+                                </li>
+                                <% if (locals.admin) { %>
+                                <li>
+                                    <a href="/admin"><span data-feather="settings"></span></a>
+                                </li>
+                                <% } %> <% } else { %>
+                                <li>
+                                    <a class="text-primary" href="/users/login">Login</a>
+                                </li>
+                                <li>
+                                    <a class="text-danger" href="/users/signup">Sign Up</a>
+                                </li>
+                                <% } %>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- Header Right -->
+                    <div class="header-right">
+                        <ul>
+                            <li>
+                                <div class="nav-search search-switch">
+                                    <span class="flaticon-search"></span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Mobile Menu -->
+                <div class="col-12">
+                    <div class="mobile_menu d-block d-lg-none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
 </header>
