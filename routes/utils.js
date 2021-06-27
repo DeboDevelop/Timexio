@@ -325,7 +325,9 @@ class ForgetPassword {
             </td>
             </tr>
             <tr>
-            <td align="center" bgcolor="#ECEDEF" background="https://i.imgur.com/eY8hwuy.png" width="640" height="400" valign="top" style="background: url('https://i.imgur.com/eY8hwuy.png') center / cover no-repeat #000000;">
+            <td align="center" bgcoconsole.log("User: ", user);
+            // console.log("Product: ", product);
+            // console.log("Order: ", order);lor="#ECEDEF" background="https://i.imgur.com/eY8hwuy.png" width="640" height="400" valign="top" style="background: url('https://i.imgur.com/eY8hwuy.png') center / cover no-repeat #000000;">
             <br>
             <div style="background: #ECEDEF;
                     margin: 0;
@@ -503,6 +505,9 @@ class OrderDeliver {
     }
 
     signupSuccessful({ user, product, order }) {
+        const uniqueID = uuidAPIKey.create();
+        const strArr = uniqueID.apiKey.split("-");
+        const invoiceID = strArr[0];
         console.log(user);
         console.log(product);
         console.log(order);
@@ -529,10 +534,10 @@ class OrderDeliver {
             padding-bottom: 20px;
             width: 400px;">
             <h1 style="color: red; font-size: 4em;">Thank You.</h1>
-            <p style="text-align: center;">Hi !</p>
+            <p style="text-align: center;">Hi ${user.name}!</p>
             <p style="text-align: center;">Thanks for your purchase from Timexio.</p>
             <h2 style="text-align: center;">INVOICE ID:</h2>
-            <h2 style="text-align: center;">F966457903</h2>
+            <h2 style="text-align: center;">${invoiceID}</h2>
             <br>
             <p style="text-align: left; color:grey;"><b>YOUR ORDER INFORMATION:</b></p>
             <hr class="rounded">
@@ -540,58 +545,21 @@ class OrderDeliver {
             <tr>
             <td>
             <p style="text-align: left;"><b>Order ID</b></p>
-            <p style="text-align: left;">F966457903</p>
+            <p style="text-align: left;">${invoiceID}</p>
             </td>
             <td>
             <p style="text-align: left;"><b>Bill To:</b></p>
-            <p style="text-align: left;">temp@gmail.com</p>
+            <p style="text-align: left;">${user.email}</p>
             </td>
             </tr>
             <tr>
             <td>
-            <p style="text-align: left;"><b>Order Date</b></p>
-            <p style="text-align: left;">May 27, 2021</p>
+            <p style="text-align: left;"><b>Delivered Date</b></p>
+            <p style="text-align: left;">${order.deliveryDate}</p>
             </td>
             <td>
             <p style="text-align: left;"><b>Source:</b></p>
             <p style="text-align: left;">Timexio</p>
-            </td>
-            </tr>
-            </table>
-            <p style="text-align: left; color:grey;"><b>HERE'S WHAT YOU ORDERED:</b></p>
-            <table style="width:100%;
-            padding: 10px;
-            border-collapse: collapse;
-            border-top: 2px solid;
-            border-bottom: 2px solid;">
-            <tr bgcolor="#E5E4E2">
-            <th style="text-align: left; padding: 10px;">Description:</th>
-            <th style="text-align: left; padding: 10px;">Price:</th>
-            </tr>
-            <tr>
-            <td style="padding: 2px;">
-            <p style="text-align: left;">Product Name</p>
-            </td>
-            <td style="padding: 2px;">
-            <p style="text-align: left;">₹9000</p>
-            </td>
-            </tr>
-            <tr>
-            <td style="padding: 2px;">
-            <p style="text-align: left;">Product 2</p>
-            </td>
-            <td style="padding: 2px;">
-            <p style="text-align: left;">₹5000</p>
-            </td>
-            </tr>
-            </table>
-            <table style="width:100%;border-collapse: collapse;">
-            <tr>
-            <td>
-            <p style="text-align: left; color:grey; padding: 10px;"><b>TOTAL [INR]:</b></p>
-            </td>
-            <td>
-            <p style="text-align: left; padding: 10px;"><b>₹14000</b></p>
             </td>
             </tr>
             </table>
@@ -604,9 +572,9 @@ class OrderDeliver {
             <tr style="border-bottom: 2px solid;">
             <td>
             <div style="overflow: hidden;">
-                <p style="float: left; color:grey;"><b>PAID FROM:</b></p>
+                <p style="float: left; color:grey;"><b>PAYMENT METHOD: ${order.paymentMethod}</b></p>
                 <p style="float: left; "><b>[INR]:</b></p>
-                <p style="float: right; "><b>₹14000</b></p>
+                <p style="float: right; "><b>₹${order.price}</b></p>
             </div>
             </td>
             </tr>
@@ -644,10 +612,12 @@ class placedOrder {
     }
 
     signupSuccessful({ user, order, userCart }) {
-        const invoiceID = uuidAPIKey.create();
-        // console.log(user);
-        // console.log(order);
-        // console.log(userCart);
+        const uniqueID = uuidAPIKey.create();
+        const strArr = uniqueID.apiKey.split("-");
+        const invoiceID = strArr[0];
+        console.log(user);
+        console.log(order);
+        console.log(userCart);
         let products = "",
             total = 0;
         for (let element of userCart) {
@@ -659,7 +629,7 @@ class placedOrder {
                 <p style="text-align: left;">₹${element.price}</p>
             </td>
             <td style="padding: 2px;">
-                <p style="text-align: left;">${order.orderedDate}</p>
+                <p style="text-align: left;">${moment().add(5, "d").format("Do MMMM, YYYY")}</p>
             </td>
         </tr>`;
             total += element.price;
@@ -693,7 +663,7 @@ class placedOrder {
             <p style="text-align: center;">Thanks for your purchase from Timexio.</p>
             <p style="text-align: center;">Your Order has been Placed !</p>
             <h2 style="text-align: center;">INVOICE ID:</h2>
-            <h2 style="text-align: center;">${invoiceID.apiKey}</h2>
+            <h2 style="text-align: center;">${invoiceID}</h2>
             <br>
             <p style="text-align: left; color:grey;"><b>YOUR ORDER INFORMATION:</b></p>
             <hr class="rounded">
@@ -701,7 +671,7 @@ class placedOrder {
                 <tr>
                     <td>
                         <p style="text-align: left;"><b>Order ID</b></p>
-                        <p style="text-align: left;">${invoiceID.apiKey}</p>
+                        <p style="text-align: left;">${invoiceID}</p>
                     </td>
                     <td>
                         <p style="text-align: left;"><b>Bill To:</b></p>

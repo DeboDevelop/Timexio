@@ -1,85 +1,91 @@
 <%- include('../partials/navbar.ejs') %>
 <main>
-	<div class="hero-cap text-center mt-2 mb-5">
-		<h1>Checkout & Payment</h1>
-		<hr />
-	</div>
-	<!--================Checkout Area =================-->
-	<section class="checkout_area section_padding">
-		<div class="container">
-			<div class="billing_details">
-				<form class="contact_form" action="/account/checkout" method="post">
-					<div class="row">
-						<div class="col-lg-8">
-							<h3>Billing Details</h3>
-							<div class="row">
-								<div class="col-md-12 form-group">
-									<input
-										required
-										type="text"
-										class="form-control"
-										id="full"
-										name="fullName"
-										placeholder="Full name"
-									/>
-								</div>
-								<div class="col-md-6 form-group">
-									<input
-										required
-										type="text"
-										class="form-control"
-										id="number"
-										name="phoneNumber"
-										placeholder="Phone number"
-									/>
-								</div>
-								<div class="col-md-6 form-group">
-									<input
-										required
-										type="text"
-										class="form-control"
-										id="email"
-										name="email"
-										placeholder="Email Address"
-									/>
-								</div>
-								<div class="col-md-12 form-group">
-									<input
-										required
-										type="text"
-										class="form-control"
-										id="address"
-										name="deliveryAddress"
-										placeholder="Delivery Address"
-									/>
-								</div>
-								<div class="col-md-6 form-group">
-									<input
-										required
-										type="text"
-										class="form-control"
-										id="city"
-										name="city"
-										placeholder="City"
-									/>
-								</div>
-								<div class="col-md-6 form-group">
-									<input
-										required
-										type="number"
-										class="form-control"
-										id="zip"
-										name="pincode"
-										placeholder="Postalcode / ZIP"
-									/>
-								</div>
-							</div>
-							<p><strong>Note:</strong> Currently we accept payment only through <strong>Cash on Delivery.</strong></p>
-						</div>
-						<div class="col-lg-4">
-							<div class="order_box">
-								<h2>Your Order</h2>
-								<!-- <ul class="list">
+    <div class="hero-cap text-center mt-2 mb-5">
+        <h1>Checkout & Payment</h1>
+        <hr />
+    </div>
+    <!--================Checkout Area =================-->
+    <section class="checkout_area section_padding">
+        <div class="container">
+            <div class="billing_details">
+                <form class="contact_form" action="/account/checkout" method="post">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h3>Billing Details</h3>
+                            <div class="row">
+                                <div class="col-md-12 form-group">
+                                    <input
+                                        required
+                                        type="text"
+                                        class="form-control"
+                                        id="full"
+                                        name="fullName"
+                                        placeholder="Full name"
+                                    />
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input
+                                        required
+                                        pattern="[789][0-9]{9}"
+                                        type="text"
+                                        class="form-control"
+                                        id="number"
+                                        name="phoneNumber"
+                                        placeholder="Phone number"
+                                    />
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input
+                                        required
+                                        type="text"
+                                        class="form-control"
+                                        id="email"
+                                        name="email"
+                                        placeholder="Email Address"
+                                    />
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <input
+                                        required
+                                        type="text"
+                                        class="form-control"
+                                        id="address"
+                                        name="deliveryAddress"
+                                        placeholder="Delivery Address"
+                                    />
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input
+                                        required
+                                        type="text"
+                                        class="form-control"
+                                        id="city"
+                                        name="city"
+                                        placeholder="City"
+                                    />
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input
+                                        required
+                                        type="number"
+                                        class="form-control"
+                                        id="zip"
+                                        name="pincode"
+                                        min="700001"
+                                        max="700157"
+                                        placeholder="Postalcode / ZIP"
+                                    />
+                                </div>
+                            </div>
+                            <p>
+                                <strong>Note:</strong> Currently we accept payment only through
+                                <strong>Cash on Delivery.</strong>
+                            </p>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="order_box">
+                                <h2>Your Order</h2>
+                                <!-- <ul class="list">
 									<li>
 										<p>Product
 											<span>Total</span>
@@ -92,36 +98,39 @@
 										</p>
 									</li>
 								</ul> -->
-								<ul class="list list_2">
-									<li>
-										<p>Total Items:
-											<span><%= priceDetails.items %></span>
-										</p>
-									</li>
-									<li>
-										<p>Delivery Charge:
-											<% if (priceDetails.shippingPrice > 0) { %>  
-												<span class="">&#8377; <%= priceDetails.shippingPrice %> </span>
-											  <% } else { %>
-												<span class="text-success font-weight-normal">FREE</span>
-											  <% } %>
-										</p>
-									</li>
-								</ul>
-								<h5 class="mt-4 mb-4">Total Amount: <span class="float-right">&#8377; <%= priceDetails.totalAmount + priceDetails.shippingPrice %></span></h5>
-							</div>
-							<button type="submit" class="btn btn-block">Place Order</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</section>
-	<!--================End Checkout Area =================-->
+                                <ul class="list list_2">
+                                    <li>
+                                        <p>
+                                            Total Items:
+                                            <span><%= priceDetails.items %></span>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            Delivery Charge: <% if (priceDetails.shippingPrice > 0) { %>
+                                            <span class="">&#8377; <%= priceDetails.shippingPrice %> </span>
+                                            <% } else { %>
+                                            <span class="text-success font-weight-normal">FREE</span>
+                                            <% } %>
+                                        </p>
+                                    </li>
+                                </ul>
+                                <h5 class="mt-4 mb-4">
+                                    Total Amount:
+                                    <span class="float-right"
+                                        >&#8377; <%= priceDetails.totalAmount + priceDetails.shippingPrice %></span
+                                    >
+                                </h5>
+                            </div>
+                            <button type="submit" class="btn btn-block">Place Order</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!--================End Checkout Area =================-->
 </main>
-<%- include('../partials/footer.ejs') %> 
-<%- include('../partials/search-box.ejs') %>
+<%- include('../partials/footer.ejs') %> <%- include('../partials/search-box.ejs') %>
 
-<script>
-
-</script>
+<script></script>

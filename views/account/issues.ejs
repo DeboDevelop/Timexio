@@ -1,16 +1,29 @@
 <%- include('../partials/navbar.ejs') %>
 <main>
-	<div class="container mt-5">
+    <div class="container mt-5">
         <div class="row my-5">
             <div class="col-12 col-lg-6">
                 <h1>Create a new Issue</h1>
                 <p>Our customer service officials will contact you as soon as possible.</p>
-                <hr>
+                <hr />
                 <%- include ('../partials/messages') %>
                 <form action="/account/issues/new" method="post">
-                    <input type="number" class="form-control my-3" name="phone" placeholder="Phone no." required>
-                    <input type="text" class="form-control my-3" name="subject" placeholder="Subject" required>
-                    <textarea rows="5" class="form-control my-3" name="message" placeholder="Message" required></textarea>
+                    <input
+                        type="text"
+                        pattern="[789][0-9]{9}"
+                        class="form-control my-3"
+                        name="phone"
+                        placeholder="Phone no."
+                        required
+                    />
+                    <input type="text" class="form-control my-3" name="subject" placeholder="Subject" required />
+                    <textarea
+                        rows="5"
+                        class="form-control my-3"
+                        name="message"
+                        placeholder="Message"
+                        required
+                    ></textarea>
                     <button type="submit" class="btn">Submit</button>
                 </form>
             </div>
@@ -19,43 +32,44 @@
             <div class="col-12 col-lg-12 mt-5">
                 <h1>All Issues</h1>
                 <% if (allIssues.length > 0) { %>
-                    <div class="table-responsive pt-2">
-                        <table class="table table-striped">
-                          <thead>
+                <div class="table-responsive pt-2">
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
-                              <th scope="col">Subject</th>
+                                <th scope="col">Subject</th>
                                 <th scope="col">Message</th>
-                              <th scope="col">Opened On</th>
-                              <th scope="col">Closed On</th>
-                              <th scope="col">Options</th>
+                                <th scope="col">Opened On</th>
+                                <th scope="col">Closed On</th>
+                                <th scope="col">Options</th>
                             </tr>
-                          </thead>
-                          <tbody>
+                        </thead>
+                        <tbody>
                             <% allIssues.forEach(issue => { %>
-                                <tr>
-                                    <td><%= issue.subject %></td>
-                                    <td style="width: 30%;"><%= issue.message %></td>
-                                    <td><%= issue.openedDate %></td>
-                                    <td><%= issue.closedDate ? issue.closedDate : 'pending' %></td>
-                                    <td>
-                                        <% if (!issue.closedDate) { %>
-                                            <form action="/account/issues/update" method="post">
-                                                <input type="text" name="issueId" value="<%= issue._id %>" hidden>
-                                                <button class="btn4 btn-danger border-0 rounded-pill py-2 px-3 cursor-pointer">Close Issue</button>
-                                            </form>
-                                        <% } %>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td><%= issue.subject %></td>
+                                <td style="width: 30%"><%= issue.message %></td>
+                                <td><%= issue.openedDate %></td>
+                                <td><%= issue.closedDate ? issue.closedDate : 'pending' %></td>
+                                <td>
+                                    <% if (!issue.closedDate) { %>
+                                    <form action="/account/issues/update" method="post">
+                                        <input type="text" name="issueId" value="<%= issue._id %>" hidden />
+                                        <button class="btn4 btn-danger border-0 rounded-pill py-2 px-3 cursor-pointer">
+                                            Close Issue
+                                        </button>
+                                    </form>
+                                    <% } %>
+                                </td>
+                            </tr>
                             <% }) %>
-                          </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
+                </div>
                 <% } else {%>
-                    <p class="lead text-center mt-5">You haven't raised any issues!</p>
+                <p class="lead text-center mt-5">You haven't raised any issues!</p>
                 <% }%>
             </div>
         </div>
     </div>
 </main>
-<%- include('../partials/footer.ejs') %> <%-
-include('../partials/search-box.ejs') %>
+<%- include('../partials/footer.ejs') %> <%- include('../partials/search-box.ejs') %>

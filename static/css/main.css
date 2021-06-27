@@ -3,151 +3,151 @@
 @import "./reset.css"; */
 
 .btn1:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .disabled,
 .disabled:hover {
-	background-color: #ddd !important;
-	border: none !important;
-	cursor: default !important;
+    background-color: #ddd !important;
+    border: none !important;
+    cursor: default !important;
 }
 
 .search-model-box .search-close-btn {
-	position: unset;
-	top: unset;
-	margin: 2rem auto;
+    position: unset;
+    top: unset;
+    margin: 2rem auto;
 }
 
 .search-model-box .search-model-form {
-	margin: auto;
+    margin: auto;
 }
 .search-model-box .search-model-form input:focus {
-	border-bottom: 2px solid #fff;
+    border-bottom: 2px solid #fff;
 }
 .ais-search-box {
-	max-width: unset;
+    max-width: unset;
 }
 .search-highlight-text {
-	font-size: 1.2rem;
-	vertical-align: sub;
+    font-size: 1.2rem;
+    vertical-align: sub;
 }
 
 .search-highlight-text em {
-	font-style: normal;
-	color: var(--danger);
+    font-style: normal;
+    color: var(--danger);
 }
 .hit-price .badge {
-	font-size: 1rem;
+    font-size: 1rem;
 }
 .ais-hits--item:hover {
-	background: #eee;
+    background: #eee;
 }
 .search-btn {
-	padding: 1rem;
-	border: none;
-	background: var(--primary);
-	border-radius: 5px;
-	font-size: 1.2rem;
+    padding: 1rem;
+    border: none;
+    background: var(--primary);
+    border-radius: 5px;
+    font-size: 1.2rem;
 }
 .search-btn:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 .ais-search-box--magnifier-wrapper,
 .ais-search-box--magnifier {
-	display: none;
+    display: none;
 }
 
 .featured-product::before {
-	content: "\2605  Featured";
-	padding: 0.35rem;
-	padding-right: 1.5rem;
-	display: block;
-	position: absolute;
-	top: 0px;
-	background-color: var(--orange);
-	color: #fff;
-	z-index: 1;
-	min-width: 100px;
-	clip-path: polygon(0 0, 100% 0, 75% 100%, 0 100%);
+    content: "\2605  Featured";
+    padding: 0.35rem;
+    padding-right: 1.5rem;
+    display: block;
+    position: absolute;
+    top: 0px;
+    background-color: var(--orange);
+    color: #fff;
+    z-index: 1;
+    min-width: 100px;
+    clip-path: polygon(0 0, 100% 0, 75% 100%, 0 100%);
 }
 
 .z-0 {
-	z-index: 0;
+    z-index: 0;
 }
 
 .featured-product-label {
-	padding: 0.35rem;
-	padding-right: 1.5rem;
-	min-width: 125px;
-	clip-path: polygon(0 0, 100% 0, 75% 100%, 0 100%);
+    padding: 0.35rem;
+    padding-right: 1.5rem;
+    min-width: 125px;
+    clip-path: polygon(0 0, 100% 0, 75% 100%, 0 100%);
 }
 
 .bg-orange {
-	background-color: var(--orange);
-	color: #fff;
+    background-color: var(--orange);
+    color: #fff;
 }
 
 .svg-fill-white {
-	fill: #fff;
+    fill: #fff;
 }
 
 .product-caption {
-	position: relative;
-	top: -70px;
-	background: #fff;
+    position: relative;
+    top: -70px;
+    background: #fff;
 }
 
 .border-bottom-5 {
-	border-bottom: 5px solid #dee2e6 !important;
+    border-bottom: 5px solid #dee2e6 !important;
 }
 
 .carousel {
-	max-height: 600px;
-	overflow: hidden;
+    max-height: 600px;
+    overflow: hidden;
 }
 
 @media screen and (max-width: 450px) {
-	.search-model-box {
-		overflow: scroll;
-	}
-	.search-model-box .search-model-form input {
-		width: 100%;
-		padding-left: 0;
-	}
-	.search-model-box .search-model-form input,
-	.search-highlight-text {
-		font-size: 1rem;
-		text-align: unset;
-	}
-	.search-model-box .search-model-form {
-		width: auto;
-	}
-	.search-btn {
-		padding: 0.5rem 1rem;
-	}
+    .search-model-box {
+        overflow: scroll;
+    }
+    .search-model-box .search-model-form input {
+        width: 100%;
+        padding-left: 0;
+    }
+    .search-model-box .search-model-form input,
+    .search-highlight-text {
+        font-size: 1rem;
+        text-align: unset;
+    }
+    .search-model-box .search-model-form {
+        width: auto;
+    }
+    .search-btn {
+        padding: 0.5rem 1rem;
+    }
 
-	.product-caption {
-		top: -40px;
-	}
+    .product-caption {
+        top: -40px;
+    }
 }
 
 @media only screen and (min-width: 572px) {
-	.carousel {
-		margin-bottom: 7rem;
-	}
+    .carousel {
+        margin-bottom: 7rem;
+    }
 }
 
 @media only screen and (max-width: 572px) {
-	.single-new-pro .product-img img {
-		width: 75%;
-	}
+    .single-new-pro .product-img img {
+        width: 75%;
+    }
 }
 
 .cursor-pointer {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .rounded-pill {
-	border-radius: 150px
+    border-radius: 150px;
 }

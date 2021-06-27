@@ -16,7 +16,7 @@
                                 <tbody>
                                     <% wishListItems.forEach(product => { %>
                                     <tr>
-                                        <td style="width: 50%">
+                                        <td style="width: 100%">
                                             <div class="media">
                                                 <div class="d-flex">
                                                     <a href="/product/<%= product.id %>/details" target="_blank"
@@ -35,9 +35,8 @@
                                         </td>
                                         <td>
                                             <h4>&#8377;<span class="input-price"><%= product.price %></span></h4>
-                                            <h4>&#8377;<span class="input-price"><%= product.increasedMRP %></span></h4>
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             <div class="checkout_btn_inner">
                                                 <a class="button checkout_btn_1 btn-block text-center"
                                                     ><span class="mr-2 text-capitalize">Add to Cart</span
@@ -49,7 +48,7 @@
                                             <button class="del-product-btn" data-productId="<%= product.id %>">
                                                 &times;
                                             </button>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                     <% }) %>
                                 </tbody>
@@ -78,57 +77,57 @@
     var userId = document.querySelector("#userId").value;
 
     // setting event listeners for quantity selection
-    quantitySelectors.forEach(function (selector) {
-        selector.addEventListener("change", function (e) {
-            var updatedQuantity = e.target.value;
-            var productId = e.target.dataset.productid;
-            var dataObj = {
-                userId: userId,
-                productId: productId,
-                updatedQuantity: updatedQuantity,
-            };
-            $.ajax({
-                type: "PATCH",
-                contentType: "application/json",
-                url: window.location.href + "/update",
-                data: JSON.stringify(dataObj),
-                success: function (response) {
-                    swal("Cart updated successfully!", "Close this box to refresh this page automatically!", "success")
-                        .then(result => {
-                            location.reload();
-                        })
-                        .catch(err => {
-                            console.log("error: ", err);
-                        });
-                },
-                error: function (response) {
-                    swal("Cart update Failed!", "If this problem persists, reload the page.", "error");
-                },
-            });
-        });
-    });
+    // quantitySelectors.forEach(function (selector) {
+    //     selector.addEventListener("change", function (e) {
+    //         var updatedQuantity = e.target.value;
+    //         var productId = e.target.dataset.productid;
+    //         var dataObj = {
+    //             userId: userId,
+    //             productId: productId,
+    //             updatedQuantity: updatedQuantity,
+    //         };
+    //         $.ajax({
+    //             type: "PATCH",
+    //             contentType: "application/json",
+    //             url: window.location.href + "/update",
+    //             data: JSON.stringify(dataObj),
+    //             success: function (response) {
+    //                 swal("Cart updated successfully!", "Close this box to refresh this page automatically!", "success")
+    //                     .then(result => {
+    //                         location.reload();
+    //                     })
+    //                     .catch(err => {
+    //                         console.log("error: ", err);
+    //                     });
+    //             },
+    //             error: function (response) {
+    //                 swal("Cart update Failed!", "If this problem persists, reload the page.", "error");
+    //             },
+    //         });
+    //     });
+    // });
 
-    // setting event listeners for all delete buttons
-    deleteBtns.forEach(function (delBtn) {
-        delBtn.addEventListener("click", function (e) {
-            var productId = e.target.dataset.productid;
-            console.log(productId);
-            var dataObj = {
-                userId: userId,
-                productId: productId,
-            };
-            $.ajax({
-                type: "DELETE",
-                contentType: "application/json",
-                url: window.location.href + "/delete",
-                data: JSON.stringify(dataObj),
-                success: function (response) {
-                    window.location.reload();
-                },
-                error: function (response) {
-                    swal("Something went wrong!", "Product not is removed from the cart", "error");
-                },
-            });
-        });
-    });
+    // // setting event listeners for all delete buttons
+    // deleteBtns.forEach(function (delBtn) {
+    //     delBtn.addEventListener("click", function (e) {
+    //         var productId = e.target.dataset.productid;
+    //         console.log(productId);
+    //         var dataObj = {
+    //             userId: userId,
+    //             productId: productId,
+    //         };
+    //         $.ajax({
+    //             type: "DELETE",
+    //             contentType: "application/json",
+    //             url: window.location.href + "/delete",
+    //             data: JSON.stringify(dataObj),
+    //             success: function (response) {
+    //                 window.location.reload();
+    //             },
+    //             error: function (response) {
+    //                 swal("Something went wrong!", "Product not is removed from the cart", "error");
+    //             },
+    //         });
+    //     });
+    // });
 </script>

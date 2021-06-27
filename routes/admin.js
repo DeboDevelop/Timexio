@@ -147,7 +147,7 @@ router.post("/product/add", ensureAuthenticated, ensureAdminAuthorized, (req, re
         tax,
         images: [primaryImage, productImage1, productImage2, productImage3],
         specs,
-        increasedMRP: price * increasedMRP + (tax / 100) * price,
+        increasedMRP: parseInt(price) + (parseInt(price) * increasedMRP) / 100,
     });
 
     if (category === "none") {
@@ -467,9 +467,9 @@ router.patch("/order/:id/deliver", async (req, res) => {
             console.log(error);
             return res.status(500).json({ message: "Something went wrong! Try again later" });
         }
-        console.log("User: ", user);
-        console.log("Product: ", product);
-        console.log("Order: ", order);
+        // console.log("User: ", user);
+        // console.log("Product: ", product);
+        // console.log("Order: ", order);
         const newMail = new OrderDeliver();
         newMail
             .signupSuccessful({ user, product, order })
