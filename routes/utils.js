@@ -73,16 +73,23 @@ const getPriceDetails = cart => {
     const priceDetails = {
         shippingPrice: 0,
     };
-    if (cart.length > 1) {
-        priceDetails.items = cart.reduce((acc, current) => parseFloat(acc.quantity) + parseFloat(current.quantity));
-        priceDetails.totalAmount = cart.reduce(
-            (acc, current) =>
-                parseFloat(acc.quantity) * parseFloat(acc.price) +
-                parseFloat(current.quantity) * parseFloat(current.price)
-        );
-    } else if (cart.length === 1) {
-        priceDetails.items = cart[0].quantity;
-        priceDetails.totalAmount = cart[0].quantity * cart[0].price;
+    if (cart.length > 0) {
+        priceDetails.items = cart.reduce((acc, current) => {
+            return { quantity: parseFloat(acc.quantity) + parseFloat(current.quantity) }
+        }).quantity;
+
+        let totalAmount = 0;
+        cart.map(each => totalAmount += parseFloat(each.quantity) * parseFloat(each.price))
+
+        priceDetails.totalAmount = totalAmount;
+    }
+    // else if (cart.length === 1) {
+    //     priceDetails.items = cart[0].quantity;
+    //     priceDetails.totalAmount = cart[0].quantity * cart[0].price;
+    // }
+    else {
+        priceDetails.items = 1
+        priceDetails.totalAmount = 0
     }
 
     if (priceDetails.totalAmount < settings.minAmtReqForFreeDelivery) {

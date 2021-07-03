@@ -1,10 +1,10 @@
 <%- include('../partials/navbar.ejs') %>
-<main>
+  <main>
     <!--================Cart Area =================-->
     <section class="cart_area section_padding">
       <input type="text" id="userId" value="<%= userId %>" hidden>
       <div class="container">
-        <% if (cartItems.length > 0) { %>
+        <% if (cartItems.length> 0) { %>
           <div class="hero-cap text-center mt-2 mb-5">
             <h1>Your Cart</h1>
           </div>
@@ -22,35 +22,42 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <% cartItems.forEach(product => { %>
+                      <% cartItems.forEach(product=> { %>
                         <tr>
                           <td style="width: 50%;">
                             <div class="media">
                               <div class="d-flex">
-                                <a href="/product/<%= product.id %>/details" target="_blank"><img class="border-0" src="<%= product.image %>" alt="product image" /></a>
+                                <a href="/product/<%= product.id %>/details" target="_blank"><img class="border-0"
+                                    src="<%= product.image %>" alt="product image" /></a>
                               </div>
                               <div class="media-body">
-                                <a href="/product/<%= product.id %>/details" target="_blank"><p><%= product.name %></p></a>
+                                <a href="/product/<%= product.id %>/details" target="_blank">
+                                  <p>
+                                    <%= product.name %>
+                                  </p>
+                                </a>
                               </div>
                             </div>
                           </td>
-                        <td>
-                          <h4>&#8377;<span class="input-price"><%= product.price %></span></h4>
-                        </td>
-                        <td>
-                          <select name="quantity" class="form-control quantity" data-productId="<%= product.id %>">
-                            <option value="1" <%= product.quantity == '1'? 'selected' : '' %> >1</option>
-                            <option value="2" <%= product.quantity == '2'? 'selected' : '' %> >2</option>
-                            <option value="3" <%= product.quantity == '3'? 'selected' : '' %> >3</option>
-                            <option value="4" <%= product.quantity == '4'? 'selected' : '' %> >4</option>
-                            <option value="5" <%= product.quantity == '5'? 'selected' : '' %> >5</option>
-                          </select>
-                        </td>
-                        <td class="text-center">
-                          <button class="del-product-btn" data-productId="<%= product.id %>">&times;</button>
-                        </td>
-                      </tr>
-                      <% }) %>
+                          <td>
+                            <h4>&#8377;<span class="input-price">
+                                <%= (product.price).toFixed(2) %>
+                              </span></h4>
+                          </td>
+                          <td>
+                            <select name="quantity" class="form-control quantity" data-productId="<%= product.id %>">
+                              <option value="1" <%=product.quantity=='1' ? 'selected' : '' %> >1</option>
+                              <option value="2" <%=product.quantity=='2' ? 'selected' : '' %> >2</option>
+                              <option value="3" <%=product.quantity=='3' ? 'selected' : '' %> >3</option>
+                              <option value="4" <%=product.quantity=='4' ? 'selected' : '' %> >4</option>
+                              <option value="5" <%=product.quantity=='5' ? 'selected' : '' %> >5</option>
+                            </select>
+                          </td>
+                          <td class="text-center">
+                            <button class="del-product-btn" data-productId="<%= product.id %>">&times;</button>
+                          </td>
+                        </tr>
+                        <% }) %>
                     </tbody>
                   </table>
                   <div class="checkout_btn_inner">
@@ -64,94 +71,99 @@
                   <ul class="list list_2">
                     <li>
                       <p>Total Items:
-                        <span><%= priceDetails.items %></span>
+                        <span>
+                          <%= priceDetails.items %>
+                        </span>
                       </p>
                     </li>
                     <li>
                       <p>Delivery Charge:
-                        <% if (priceDetails.shippingPrice > 0) { %>  
+                        <% if (priceDetails.shippingPrice> 0) { %>
                           <span class="">&#8377; <%= priceDetails.shippingPrice %> </span>
                           <% } else { %>
-                          <span class="text-success font-weight-normal">FREE</span>
-                          <% } %>
+                            <span class="text-success font-weight-normal">FREE</span>
+                            <% } %>
                       </p>
                     </li>
                   </ul>
-                  <h5 class="mt-4 mb-4">Total Amount: <span class="float-right">&#8377; <%= priceDetails.totalAmount + priceDetails.shippingPrice %></span></h5>
+                  <h5 class="mt-4 mb-4">Total Amount: <span class="float-right">&#8377; <%= (priceDetails.totalAmount +
+                        priceDetails.shippingPrice).toFixed(2) %></span></h5>
                 </div>
                 <div class="checkout_btn_inner">
-                  <a class="button checkout_btn_1 btn-block text-center" href="/account/checkout"><span class="mr-2 text-capitalize">proceed to checkout</span><i data-feather="credit-card"></i></a>
+                  <a class="button checkout_btn_1 btn-block text-center" href="/account/checkout"><span
+                      class="mr-2 text-capitalize">proceed to checkout</span><i data-feather="credit-card"></i></a>
                 </div>
               </div>
             </div>
           </div>
-        <% } else { %>
-          <h3 class="display-4 text-center m-5">Your cart is empty!</h3>
-        <% } %>
+          <% } else { %>
+            <h3 class="display-4 text-center m-5">Your cart is empty!</h3>
+            <% } %>
       </div>
     </section>
     <!--================End Cart Area =================-->
-</main>
-<%- include('../partials/footer.ejs') %> <%- include('../partials/search-box.ejs')%>
+  </main>
+  <%- include('../partials/footer.ejs') %>
+    <%- include('../partials/search-box.ejs')%>
 
-<script>
-  var quantitySelectors = document.querySelectorAll('select');
-  var deleteBtns = document.querySelectorAll('.del-product-btn');
-  var userId = document.querySelector('#userId').value;
+      <script>
+        var quantitySelectors = document.querySelectorAll('select');
+        var deleteBtns = document.querySelectorAll('.del-product-btn');
+        var userId = document.querySelector('#userId').value;
 
-  // setting event listeners for quantity selection
-  quantitySelectors.forEach(function (selector) { 
-    selector.addEventListener('change', function (e) { 
-      var updatedQuantity = e.target.value;
-      var productId = e.target.dataset.productid;
-      var dataObj = {
-        userId: userId,
-        productId: productId,
-        updatedQuantity: updatedQuantity
-      }
-      $.ajax({
-        type: "PATCH",
-        contentType: "application/json",
-        url: window.location.href+"/update",
-        data: JSON.stringify(dataObj),
-        success: function (response) {
-          swal("Cart updated successfully!", "Close this box to refresh this page automatically!", 'success')
-            .then(result => {
-              location.reload()
-            })
-            .catch(err => {
-              console.log('error: ',err)
-            })
-        },
-        error: function (response) { 
-          swal("Cart update Failed!", "If this problem persists, reload the page.", 'error');
-        }
-      });
-    })
-  });
+        // setting event listeners for quantity selection
+        quantitySelectors.forEach(function (selector) {
+          selector.addEventListener('change', function (e) {
+            var updatedQuantity = e.target.value;
+            var productId = e.target.dataset.productid;
+            var dataObj = {
+              userId: userId,
+              productId: productId,
+              updatedQuantity: updatedQuantity
+            }
+            $.ajax({
+              type: "PATCH",
+              contentType: "application/json",
+              url: window.location.href + "/update",
+              data: JSON.stringify(dataObj),
+              success: function (response) {
+                swal("Cart updated successfully!", "Close this box to refresh this page automatically!", 'success')
+                  .then(result => {
+                    location.reload()
+                  })
+                  .catch(err => {
+                    console.log('error: ', err)
+                  })
+              },
+              error: function (response) {
+                swal("Cart update Failed!", "If this problem persists, reload the page.", 'error');
+              }
+            });
+          })
+        });
 
-  // setting event listeners for all delete buttons
-  deleteBtns.forEach(function (delBtn) { 
-    delBtn.addEventListener('click', function (e) { 
-      var productId = e.target.dataset.productid;
-      console.log(productId);
-      var dataObj = {
-        userId: userId,
-        productId: productId
-      }
-      $.ajax({
-        type: "DELETE",
-        contentType: "application/json",
-        url: window.location.href+"/delete",
-        data: JSON.stringify(dataObj),
-        success: function (response) {
-          window.location.reload();
-        },
-        error: function (response) { 
-          swal("Something went wrong!", "Product not is removed from the cart", 'error');
-        }
-      });
-    })
-  })
+        // setting event listeners for all delete buttons
+        deleteBtns.forEach(function (delBtn) {
+          delBtn.addEventListener('click', function (e) {
+            var productId = e.target.dataset.productid;
+            console.log(productId);
+            var dataObj = {
+              userId: userId,
+              productId: productId
+            }
+            $.ajax({
+              type: "DELETE",
+              contentType: "application/json",
+              url: window.location.href + "/delete",
+              data: JSON.stringify(dataObj),
+              success: function (response) {
+                window.location.reload();
+              },
+              error: function (response) {
+                swal("Something went wrong!", "Product not is removed from the cart", 'error');
+              }
+            });
+          })
+        })
 
-</script>
+      </script>
